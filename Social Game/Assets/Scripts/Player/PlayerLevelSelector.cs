@@ -11,6 +11,7 @@ public class PlayerLevelSelector : MonoBehaviour
     private int _selectedLevel = 0;
     private int _levelCount;
     private bool _ready = false;
+    private string _levelName = "One";
 
     private void Awake() {
         _levelContainer = GameObject.FindGameObjectWithTag("LevelContainer");
@@ -29,8 +30,10 @@ public class PlayerLevelSelector : MonoBehaviour
             float dir = ctx.ReadValue<float>();
             _selectedLevel += (int) dir;
 
-            Transform Parent = _levelContainer.transform.GetChild(_selectedLevel % _levelCount).GetChild(1);
-            transform.SetParent(Parent);
+            Transform Parent = _levelContainer.transform.GetChild(_selectedLevel % _levelCount);
+            _levelName = Parent.name;
+
+            transform.SetParent(Parent.GetChild(1));
         }
     }
 
@@ -39,7 +42,7 @@ public class PlayerLevelSelector : MonoBehaviour
         if (ctx.performed && _ready == false)
         {
             _ready = true;
-            print("Select Level");
+            GameManager.Instance.LevelSelected(_levelName);
         }
     }
 

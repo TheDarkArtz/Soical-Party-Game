@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    private PlayerInput _playerInput;
+
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float firectionAmount;
@@ -26,7 +28,7 @@ public class PlayerController : MonoBehaviour
     [Header("Ground")]
     [SerializeField] LayerMask isGround;
 
-    private Collider2D _collider;
+    private CircleCollider2D _collider;
     private Rigidbody2D rb;
 
     private float oldDirection;
@@ -34,11 +36,11 @@ public class PlayerController : MonoBehaviour
     private bool canJump = true;
 
     private GameObject spawns;
-    public int playerIndex;
 
     private void Awake() {
         rb = gameObject.GetComponent<Rigidbody2D>();
-        _collider = gameObject.GetComponent<Collider2D>();
+        _collider = gameObject.GetComponent<CircleCollider2D>();
+        _playerInput = gameObject.GetComponent<PlayerInput>();
     }
 
     private void Start() {
@@ -48,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
     public void Spawn()
     {
-        gameObject.transform.position = spawns.transform.GetChild(playerIndex).transform.position;
+        gameObject.transform.position = spawns.transform.GetChild(_playerInput.playerIndex).transform.position;
     }
 
     public void OnMove(InputAction.CallbackContext ctx)

@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 using TMPro;
 
-public class LevelSelection : MonoBehaviour
+public class LevelInputManager : MonoBehaviour
 {
     private PlayerInputManager playerInputManager;
     public GameObject prefab;
